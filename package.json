@@ -1,31 +1,25 @@
 {
-  "name": "@aegisjsproject/tempplate",
-  "version": "0.0.4",
-  "description": "Template repository for `@aegisjsproject/component` components",
+  "name": "@aegisjsproject/aegis-modal",
+  "version": "0.0.1",
+  "description": "An `<aegis-modal>` component built using [`@aegisjsproject/component`](https://npmjs.org/package/@aegisjsproject/component)",
   "keywords": [
     "aegis",
+    "aegis-component",
+    "web-component",
+    "custom-element",
     "dom",
     "html",
-    "css",
-    "theming",
-    "secure",
-    "sanitizer-api",
-    "html-templates",
-    "constructable-stylesheets",
-    "custom-elements",
-    "web-components",
-    "component-library",
-    "aegis-template",
-    "github-template"
+    "modal",
+    "dialog"
   ],
   "type": "module",
-  "main": "./hello-world.cjs",
-  "module": "./hello-world.js",
-  "unpkg": "./hello-world.js",
+  "main": "./aegis-modal.cjs",
+  "module": "./aegis-modal.js",
+  "unpkg": "./aegis-modal.js",
   "exports": {
     ".": {
-      "import": "./hello-world.js",
-      "require": "./hello-world.cjs"
+      "import": "./aegis-modal.js",
+      "require": "./aegis-modal.cjs"
     },
     "./*.js": {
       "import": "./*.js",
