@@ -60,7 +60,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AegisJSProject/template.git"
+    "url": "git+https://github.com/AegisJSProject/aegis-modal.git"
   },
   "author": "Chris Zuber <admin@kernvalley.us>",
   "license": "MIT",
@@ -75,9 +75,9 @@
     }
   ],
   "bugs": {
-    "url": "https://github.com/AegisJSProject/template/issues"
+    "url": "https://github.com/AegisJSProject/aegis-modal/issues"
   },
-  "homepage": "https://github.com/AegisJSProject/template#readme",
+  "homepage": "https://github.com/AegisJSProject/aegis-modal#readme",
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@shgysk8zer0/rollup-import": "^1.2.3",
