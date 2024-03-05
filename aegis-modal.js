@@ -1,157 +1,9 @@
 import { html } from '@aegisjsproject/core/parsers/html.js';
-import { css } from '@aegisjsproject/core/parsers/css.js';
 import { AegisComponent } from '@aegisjsproject/component/base.js';
 import { SYMBOLS, TRIGGERS } from '@aegisjsproject/component/consts.js';
-import { dark, light } from '@aegisjsproject/styles/palette/gnome.js';
-import { registerCallback } from '@aegisjsproject/core/callbackRegistry.js';
-import { EVENTS, AEGIS_EVENT_HANDLER_CLASS } from '@aegisjsproject/core/events.js';
-import { closeIcon } from './icons.js';
-
-const inertMap = new WeakMap();
-
-const tabElsSelector = 'a[href]:not([inert]), input:not([inert]), select:not([inert]), textarea:not([inert]), button:not([inert]), iframe:not([inert]), audio:not([inert]), video:not([inert]), [tabindex]:not([inert]), [contenteditable="true"]:not([inert], [is]:defined:not([inert])';
-
-const getCustomElements = () => Array.from(document.querySelectorAll(':defined'))
-	.filter(el => el.tagName.includes('-') || el.hasAttribute('is'));
-
-function getOtherElements(modal) {
-	return [
-		...Array.from(document.body.querySelectorAll(tabElsSelector)),
-		...getCustomElements(modal),
-	].filter(el => ! (modal.isSameNode(el) || modal.contains(el) || el.contains(modal)));
-}
-
-function toggleInert(modal, inert) {
-	if (inert) {
-		const els = getOtherElements(modal);
-		inertMap.set(modal, els);
-		els.forEach(el => el.inert = true);
-	} else if (inertMap.has(modal)) {
-		inertMap.get(modal).forEach(el => el.inert = false);
-		inertMap.delete(modal);
-	}
-}
-
-const styles = css`
-	:host(:not([open])) {
-		display: none;
-	}
-
-	:host([open]:not([theme])), :host([open][theme]) {
-		background-color: transparent;
-	}
-
-	:host([open]) {
-		position: fixed;
-		z-index: 2147483647;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		right: 0;
-		isolation: isolate;
-	}
-
-	:host([open]) .backdrop {
-		width: 100%;
-		height: 100%;
-		background-color: rgba(0, 0, 0, 0.7);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.sticky {
-		position: sticky;
-		top: 0;
-	}
-
-	.flex {
-		display: flex;
-	}
-
-	.flex.row {
-		flex-direction: row;
-	}
-
-	.flex.no-wrap {
-		flex-wrap: no-wrap;
-	}
-
-	.container {
-		display: flex;
-		min-width: 85%;
-		max-width: 95%;
-		min-height: 50%;
-		max-height: 95%;
-		overflow: auto;
-		isolation: isolate;
-		flex-direction: column;
-	}
-
-	.header {
-		background-color: ${dark[3]};
-		color: ${light[1]};
-		padding: 0.7rem;
-	}
-
-	.header-container {
-		flex-grow: 1;
-	}
-
-	.close-btn {
-		display: inline-block;
-		width: 1.3rem;
-		height: 1.3rem;
-		cursor: pointer;
-		background-color: transparent;
-		border: none;
-		box-sizing: content-box;
-		color: inherit;
-	}
-
-	.body {
-		background-color: ${light[1]};
-		color: ${dark[4]};
-		flex-grow: 1;
-		padding: 0.4rem;
-	}
-
-	:host([theme="dark"]) .body {
-		background-color: ${dark[2]};
-		color: ${light[1]};
-	}
-
-	@media (prefers-color-scheme: dark) {
-		:host(:not([theme="light"])) .body {
-			background-color: ${dark[2]};
-			color: ${light[1]};
-		}
-	}
-`;
-
-const closeHandler = registerCallback(
-	'aegis-modal:close',
-	event => event.target.getRootNode().host.close(),
-);
-
-
-const template = html`
-<div part="backdrop" class="backdrop">
-	<div part="container" id="container" class="container">
-		<div part="header" id="header" class="header sticky top flex row no-wrap">
-			<div class="header-container">
-				<slot name="header"></slot>
-			</div>
-			<button type="button" title="Close modal" ${EVENTS.onClick}="${closeHandler}" id="close" class="btn close-btn ${AEGIS_EVENT_HANDLER_CLASS}" part="btn close" aria-label="Close Modal" aria-keyshortcuts="Escape">
-				<slot name="close-icon">X</slot>
-			</button>
-		</div>
-		<div part="body" id="body" class="body">
-			<slot id="content"></slot>
-		</div>
-	</div>
-</div>
-`;
+import { styles } from './styles.js';
+import { template } from './template.js';
+import { toggleInert, renable } from './functions.js';
 
 export class AegisModalElement extends AegisComponent {
 	#removeController;
@@ -168,7 +20,6 @@ export class AegisModalElement extends AegisComponent {
 				internals.ariaHidden = this.open ? 'false' : 'true';
 				internals.ariaLabel = 'Aegis Modal Dialog';
 				internals.ariaModal = 'true';
-				shadow.getElementById('close').replaceChildren(closeIcon.cloneNode(true));
 				setTimeout(() => console.log(internals), 2000);
 				this.hidden = ! this.open;
 				break;
@@ -184,10 +35,8 @@ export class AegisModalElement extends AegisComponent {
 					this.close();
 				}
 
-				if (inertMap.has(this)) {
-					toggleInert(this, false);
-					inertMap.delete(this);
-				}
+				renable(this);
+
 				break;
 
 			case TRIGGERS.slotChanged:
