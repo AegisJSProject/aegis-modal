@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.0.2] - 2024-03-12
+
+### Changed
+- Updates to dependencies
+- Remove use of Aegis event class constant
+
+### Fixed
+- Fix disconnected callback
+
 ## [v0.0.1] - 2024-03-04
 
 Initial Release
