@@ -20,7 +20,6 @@ export class AegisModalElement extends AegisComponent {
 				internals.ariaHidden = this.open ? 'false' : 'true';
 				internals.ariaLabel = 'Aegis Modal Dialog';
 				internals.ariaModal = 'true';
-				setTimeout(() => console.log(internals), 2000);
 				this.hidden = ! this.open;
 				break;
 
@@ -30,7 +29,7 @@ export class AegisModalElement extends AegisComponent {
 				}
 				break;
 
-			case TRIGGERS.discononected:
+			case TRIGGERS.disconnected:
 				if (this.open) {
 					this.close();
 				}

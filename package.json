@@ -1,6 +1,6 @@
 {
   "name": "@aegisjsproject/aegis-modal",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An `<aegis-modal>` component built using [`@aegisjsproject/component`](https://npmjs.org/package/@aegisjsproject/component)",
   "keywords": [
     "aegis",
@@ -86,8 +86,8 @@
     "rollup": "^4.12.0"
   },
   "dependencies": {
-    "@aegisjsproject/component": "^0.1.1",
-    "@aegisjsproject/core": "^0.1.2",
+    "@aegisjsproject/component": "^0.1.2",
+    "@aegisjsproject/core": "^0.1.5",
     "@aegisjsproject/styles": "^0.1.1"
   }
 }

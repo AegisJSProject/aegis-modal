@@ -1,6 +1,6 @@
 import { html } from '@aegisjsproject/core/parsers/html.js';
 import { registerCallback } from '@aegisjsproject/core/callbackRegistry.js';
-import { EVENTS, AEGIS_EVENT_HANDLER_CLASS } from '@aegisjsproject/core/events.js';
+import { EVENTS } from '@aegisjsproject/core/events.js';
 import { closeIcon } from './icons.js';
 
 const closeHandler = registerCallback(
@@ -15,7 +15,7 @@ const template = html`
 			<div class="header-container">
 				<slot name="header"></slot>
 			</div>
-			<button type="button" title="Close modal" ${EVENTS.onClick}="${closeHandler}" id="close" class="btn close-btn ${AEGIS_EVENT_HANDLER_CLASS}" part="btn close" aria-label="Close Modal" aria-keyshortcuts="Escape">
+			<button type="button" title="Close modal" ${EVENTS.onClick}="${closeHandler}" id="close" class="btn close-btn" part="btn close" aria-label="Close Modal" aria-keyshortcuts="Escape">
 				<slot name="close-icon">X</slot>
 			</button>
 		</div>
