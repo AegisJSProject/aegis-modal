@@ -81,7 +81,7 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@shgysk8zer0/rollup-import": "^1.2.3",
-    "eslint": "^8.57.0",
+    "eslint": "^9.8.0",
     "http-server": "^14.1.1",
     "rollup": "^4.12.0"
   },
